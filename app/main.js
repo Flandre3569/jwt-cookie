@@ -1,13 +1,13 @@
 const Koa = require('koa')
-const registerRouter = require('../router/register')
 const bodyParser = require('koa-bodyparser')
 const { errorHandler } = require('../errors/error')
+const routerAsync = require('./router');
 
 const app = new Koa()
+app.routers = routerAsync;
 
 app.use(bodyParser())
-app.use(registerRouter.routes())
-app.use(registerRouter.allowedMethods())
+app.routers();
 app.on('error', errorHandler)
 
 module.exports = app;

@@ -11,6 +11,10 @@ const errorHandler = (err, ctx) => {
       status = 409;
       message = '该用户名已存在';
       break;
+    case errors.USERNAME_OR_PASSWORD_ERROR:
+      status = 409;
+      message = '用户名或密码错误';
+      break;
     default:
       status = 404;
       message = 'NOT FOUND';
