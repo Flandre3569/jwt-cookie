@@ -1,33 +1,21 @@
 const Koa = require('koa')
 const Router = require('koa-router')
-const Session = require('koa-session')
-
 
 const app = new Koa()
 const router = new Router()
 
-const session = Session({
-  key: 'sessionid',
-  maxAge: 10 * 1000,
-  signed: true
-}, app)
-app.keys = ['aaa']
-app.use(session)
-
 router.get('/test', (ctx, next) => {
-  const id = 1;
-  const name = 'mx';
-  ctx.session.user = { id, name };
-  ctx.response.body = 'test';
+  ctx.cookies.set("name", "mx", {
+    maxAge: 1000 * 1000
+  })
+  ctx.body = "cookie设置成功"
 })
 
 router.get('/demo', (ctx, next) => {
-  console.log(ctx.session.user);
-  ctx.response.body = 'demo'
+  const value = ctx.cookies.get('name');
+  ctx.body = 'cookie获取成功' + value;
 })
 
 app.use(router.routes())
 app.use(router.allowedMethods())
-
-
 app.listen(3000)
