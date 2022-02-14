@@ -15,6 +15,10 @@ const errorHandler = (err, ctx) => {
       status = 409;
       message = '用户名或密码错误';
       break;
+    case errors.NO_AUTHORIZATION:
+      status = 401;
+      message = 'token未授权';
+      break;
     default:
       status = 404;
       message = 'NOT FOUND';

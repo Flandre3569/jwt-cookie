@@ -23,11 +23,17 @@ class UserController {
 
     const result = await service.queryByName(user);
     if (result.length && result[0].password === password) {
-      ctx.response.body = '登录成功';
+      ctx.response.user = result[0];
+      await next();
     } else {
       const error = new Error(errorTypes.USERNAME_OR_PASSWORD_ERROR);
       return ctx.app.emit('error', error, ctx);
     }
+  };
+
+  // 测试token验证的方法
+  success(ctx, next) {
+    ctx.response.body = '验证成功';
   }
 }
 
